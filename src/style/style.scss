@@ -1,0 +1,30 @@
+$primary-color: #b2dfdb;
+$dark-color: #82ada9;
+$light-color: #e5ffff;
+$lg: #f8f9fa;
+$dg: #212529;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  color: $dg;
+  min-height: 100vh;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+form {
+  display: flex;
+}
