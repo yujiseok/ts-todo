@@ -1,6 +1,6 @@
 import { API_CONFIG } from "../store/store";
 
-const request = async (endpoint, method, body = null) => {
+export const request = async (endpoint, method, body = null) => {
   if (body !== null) {
     body = JSON.stringify(body);
   }
@@ -13,11 +13,9 @@ const request = async (endpoint, method, body = null) => {
 
     const json = await res.json();
 
-    console.log(json);
+    // console.log(json);
     return json;
   } catch (error) {
     console.log(error);
   }
 };
-
-request("todos/", "get");

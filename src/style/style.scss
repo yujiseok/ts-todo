@@ -14,6 +14,9 @@ body {
   font-family: "Poppins", sans-serif;
   color: $dg;
   min-height: 100vh;
+  background-color: $dark-color;
+  position: relative;
+  overflow-x: hidden;
 }
 
 ul,
@@ -21,10 +24,240 @@ li {
   list-style: none;
 }
 
+input,
+select {
+  outline: none;
+  border: none;
+  font-family: "Poppins", sans-serif;
+}
+
+input {
+  font-size: 1rem;
+}
+
+input:disabled {
+  background-color: transparent;
+  color: $dg;
+  height: 100%;
+  font-size: 1rem;
+}
+
 button {
+  outline: none;
+  border: none;
   cursor: pointer;
 }
 
-form {
-  display: flex;
+header {
+  min-height: 20vh;
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+main {
+  .container {
+    max-width: 500px;
+    margin-inline: auto;
+  }
+
+  .form-wrapper {
+    margin-bottom: 3.75rem;
+    form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+
+      input {
+        background-color: #fff;
+        padding: 1rem;
+        border-radius: 6px;
+        width: 100%;
+      }
+
+      .add-btn {
+        padding: 1rem;
+        border-radius: 6px;
+        background-color: #fff;
+        transition: all 0.5s ease;
+        min-height: 56px;
+
+        &:hover {
+          background-color: $dg;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .select-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+
+    select {
+      border-radius: 4px;
+      padding: 0.25rem;
+    }
+  }
+
+  .todo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .todo-list {
+      width: 100%;
+    }
+  }
+
+  .todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #fff;
+    border-radius: 6px;
+    transition: all 0.5s ease, transform 0.5s linear;
+
+    &.completed {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+
+    &.delete {
+      transform: translateX(500px);
+      opacity: 0;
+    }
+
+    .check-todo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .todo-title {
+        padding: 0.25rem;
+
+        &:focus {
+          outline: 2px solid $dark-color;
+          border-radius: 4px;
+        }
+      }
+    }
+
+    .checkbox {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      input {
+        display: none;
+
+        &:checked + .checkbox-icon {
+          border-color: $dark-color;
+        }
+
+        &:checked + .checkbox-icon::before {
+          height: 10px;
+          transition: all 0.15s ease;
+        }
+
+        &:checked + .checkbox-icon::after {
+          height: 20px;
+          transition: all 0.15s ease;
+        }
+      }
+
+      &-icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-color: transparent;
+        border: 2px solid $dark-color;
+        position: relative;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &::after,
+        &::before {
+          content: "";
+          display: inline-block;
+          width: 4px;
+          height: 0;
+          background-color: $dark-color;
+          position: absolute;
+          transform-origin: left top;
+          border-radius: 4px;
+        }
+
+        &::before {
+          top: 9px;
+          transform: rotate(-45deg);
+        }
+
+        &::after {
+          top: 16px;
+          left: 8px;
+          transform: rotate(-135deg);
+        }
+      }
+
+      &-text {
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+    }
+
+    .btn-wrapper {
+      .fa-solid {
+        pointer-events: none;
+      }
+
+      .delete-btn {
+        margin-right: 0.5rem;
+        // color: red;
+        background-color: transparent;
+        padding: 0.25rem;
+      }
+
+      .edit-btn {
+        // color: lightgray;
+        padding: 0.25rem;
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.toastify-container {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
+.toastify {
+  // position: absolute;
+  // bottom: 0;
+  // right: 0;
+  background-color: $primary-color;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+  border-radius: 6px;
+  color: $dg;
+  padding: 2rem;
+  margin: 1rem;
+  // animation: fadeout 0.5s;
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
