@@ -77,6 +77,11 @@ main {
         padding: 1rem;
         border-radius: 6px;
         width: 100%;
+
+        // &:focus {
+        //   outline: 2px solid $dg;
+        //   border-radius: 4px;
+        // }
       }
 
       .add-btn {
@@ -165,11 +170,6 @@ main {
 
       .todo-title {
         padding: 0.25rem;
-
-        &:focus {
-          outline: 2px solid $dark-color;
-          border-radius: 4px;
-        }
       }
     }
 

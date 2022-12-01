@@ -9,12 +9,14 @@ addBtn.addEventListener("click", postTodo);
 async function postTodo(e) {
   e.preventDefault();
   const todoInput = container.querySelector(".todo-input") as HTMLInputElement;
-  let title = todoInput.value.trim();
+  const addBtn = document.querySelector(".add-btn");
+  const title = todoInput.value.trim();
 
   title.length === 0 &&
+    addBtn.firstElementChild.classList.contains("fa-plus") &&
     toastifyOpen("할 일을 적어주세요 😵", "#ff5252", "#fff");
 
-  if (title) {
+  if (title && addBtn.firstElementChild.classList.contains("fa-plus")) {
     toastifyOpen("할 일이 추가됐어요 😀", "#b2dfdb");
     await request("todos", "post", {
       title,
