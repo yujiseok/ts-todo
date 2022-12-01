@@ -1,5 +1,6 @@
 import { request } from "../api/request";
 import { container } from "../store/store";
+import { getTodos } from "./getTodos";
 import { toastifyOpen } from "./toast";
 const addBtn = container.querySelector(".add-btn");
 
@@ -18,6 +19,8 @@ async function postTodo(e) {
     await request("todos", "post", {
       title,
     });
+
     todoInput.value = "";
+    getTodos(await request("todos", "get"));
   }
 }

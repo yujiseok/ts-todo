@@ -16,7 +16,6 @@ export const request = async (
       headers: API_CONFIG.HEADERS,
       data,
     }).then((res) => res.data);
-    console.log(todo);
     return todo;
   } catch (error) {
     throw error;
