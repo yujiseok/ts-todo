@@ -6,10 +6,12 @@ export const toastifyOpen = (text: string, bg: string, color?: string) => {
   toastify.style.backgroundColor = bg;
   toastify.style.color = color;
   toastify.textContent = text;
-
-  toastifyContainer.appendChild(toastify);
+  toastifyContainer.childNodes.length < 6 &&
+    toastifyContainer.appendChild(toastify);
 
   setTimeout(() => {
+    // toastify.addEventListener("animationend", () => {
     toastify.remove();
+    // });
   }, 2000);
 };

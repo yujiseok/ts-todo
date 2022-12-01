@@ -6,11 +6,6 @@ const todos = await request("todos", "get");
 const doneFilter = container.querySelector(".done-filter");
 const orderFilter = container.querySelector(".order-filter");
 
-// console.log("normal : ", todos);
-// console.log("doneTodos : ", doneTodos);
-// console.log("notDoneTodos : ", notDoneTodos);
-// console.log("ascendingTodos : ", ascendingTodos);
-
 export const getTodos = (todos: ResponseValue) => {
   const todoList = document.querySelector(".todo-list");
   todoList.innerHTML = "";
@@ -70,6 +65,12 @@ export const getTodos = (todos: ResponseValue) => {
 
       todoList.appendChild(todoItem);
     });
+
+  // const deleteAllbtn = document.querySelector(
+  //   ".deleteAll-btn"
+  // ) as HTMLButtonElement;
+
+  // todos.length > 0 && (deleteAllbtn.style.display = "block");
 };
 
 todos.length > 0 ? getTodos(todos) : console.log("할일이 없는데?");
@@ -94,7 +95,6 @@ doneFilter.addEventListener("click", async (e) => {
 
 orderFilter.addEventListener("click", async (e) => {
   const item = e.target as HTMLSelectElement;
-  console.log(item.value);
 
   if (item.value === "none") {
     const todos = await request("todos", "get");
@@ -114,34 +114,34 @@ orderFilter.addEventListener("click", async (e) => {
   }
 });
 
-const editBtns = document.querySelectorAll(".edit-btn");
+// const editBtns = document.querySelectorAll(".edit-btn");
 
 // editBtns.forEach((editBtn) => {
 //   editBtn.addEventListener("click", editTodo);
 // });
 
-async function editTodo(e) {
-  const todoItem = e.target.parentNode.parentNode as HTMLLIElement;
-  const id = todoItem.dataset.id;
-  const todoInput = document.querySelector(".todo-input") as HTMLInputElement;
-  const addBtn = document.querySelector(".add-btn");
-  let isDone = true;
+// async function editTodo(e) {
+//   const todoItem = e.target.parentNode.parentNode as HTMLLIElement;
+//   const id = todoItem.dataset.id;
+//   const todoInput = document.querySelector(".todo-input") as HTMLInputElement;
+//   const addBtn = document.querySelector(".add-btn");
+//   let isDone = true;
 
-  console.log("clicked");
+//   console.log("clicked");
 
-  todoInput.focus();
-  todoInput.value = todoItem.textContent;
-  addBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
+//   todoInput.focus();
+//   todoInput.value = todoItem.textContent;
+//   addBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
 
-  todoItem.classList.toggle("completed");
+//   todoItem.classList.toggle("completed");
 
-  if (addBtn.firstElementChild.classList.contains("fa-pen-to-square")) {
-    addBtn.addEventListener("click", async () => {
-      await request(`todos/${id}`, "put", {
-        title: todoInput.value,
-        done: true,
-      });
-      addBtn.innerHTML = '<i class="fa-solid fa-plus"></i>';
-    });
-  }
-}
+//   if (addBtn.firstElementChild.classList.contains("fa-pen-to-square")) {
+//     addBtn.addEventListener("click", async () => {
+//       await request(`todos/${id}`, "put", {
+//         title: todoInput.value,
+//         done: true,
+//       });
+//       addBtn.innerHTML = '<i class="fa-solid fa-plus"></i>';
+//     });
+//   }
+// }

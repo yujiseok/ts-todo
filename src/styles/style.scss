@@ -111,6 +111,7 @@ main {
     margin-top: 1rem;
 
     .deleteAll-btn {
+      // display: none;
       border-radius: 4px;
       padding: 0.25rem;
       background-color: #fff;
@@ -263,9 +264,6 @@ main {
 }
 
 .toastify {
-  // position: absolute;
-  // bottom: 0;
-  // right: 0;
   background-color: $primary-color;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -273,14 +271,18 @@ main {
   color: $dg;
   padding: 2rem;
   margin: 1rem;
-  // animation: fadeout 0.5s;
+  // animation: fadeout 2s forwards;
+  // &.delete {
+  // }
 }
 
 @keyframes fadeout {
   from {
     opacity: 1;
+    transform: translateX(0);
   }
   to {
     opacity: 0;
+    transform: translateX(500px);
   }
 }

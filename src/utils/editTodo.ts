@@ -29,7 +29,6 @@ async function postHandler(e) {
     const addBtn = document.querySelector(".add-btn");
     const id = todo.dataset.id;
 
-    console.log("clicked");
     todoInput.focus();
     todoInput.value = todoTitle.textContent;
     addBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
