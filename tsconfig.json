@@ -5,15 +5,16 @@
     "module": "ESNext",
     "lib": ["ESNext", "DOM"],
     "moduleResolution": "Node",
-    "strict": false, // true로 바꿔야함
+    "strict": true, // true로 바꿔야함
     "resolveJsonModule": true,
-    "isolatedModules": false, // true로
+    "isolatedModules": true, // true로
     "esModuleInterop": true,
     "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "noImplicitAny": false // 이벤트 객체를 어떻게 처리할지..?
   },
   "include": ["src"]
 }

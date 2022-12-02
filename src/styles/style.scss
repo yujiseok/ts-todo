@@ -171,6 +171,10 @@ main {
 
       .todo-title {
         padding: 0.25rem;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
       }
     }
 
@@ -237,6 +241,8 @@ main {
     }
 
     .btn-wrapper {
+      display: flex;
+      align-items: center;
       .fa-solid {
         pointer-events: none;
       }

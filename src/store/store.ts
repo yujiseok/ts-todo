@@ -7,6 +7,6 @@ const API_CONFIG = {
   BASEURL: "https://asia-northeast3-heropy-api.cloudfunctions.net/api/",
 };
 
-const container = document.getElementById("container");
+const container = document.getElementById("container") as HTMLDivElement;
 
 export { API_CONFIG, container };

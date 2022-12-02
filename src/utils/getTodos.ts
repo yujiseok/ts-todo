@@ -3,11 +3,11 @@ import { container } from "../store/store";
 import { ResponseValue } from "../typing";
 
 const todos = await request("todos", "get");
-const doneFilter = container.querySelector(".done-filter");
-const orderFilter = container.querySelector(".order-filter");
+const doneFilter = container?.querySelector(".done-filter");
+const orderFilter = container?.querySelector(".order-filter");
 
 export const getTodos = (todos: ResponseValue) => {
-  const todoList = document.querySelector(".todo-list");
+  const todoList = container.querySelector(".todo-list") as HTMLUListElement;
   todoList.innerHTML = "";
   todos.length > 0 &&
     todos.map((todo) => {
@@ -25,7 +25,6 @@ export const getTodos = (todos: ResponseValue) => {
       const checkbox = document.createElement("label");
       const checkInput = document.createElement("input");
       checkInput.setAttribute("type", "checkbox");
-      // done ? (checkInput.checked = true) : (checkInput.checked = false);
 
       if (done) {
         checkInput.checked = true;
@@ -71,11 +70,14 @@ export const getTodos = (todos: ResponseValue) => {
   // ) as HTMLButtonElement;
 
   // todos.length > 0 && (deleteAllbtn.style.display = "block");
+
+  // editHandler();
+  // deleteHandler();
 };
 
 todos.length > 0 ? getTodos(todos) : console.log("할일이 없는데?");
 
-doneFilter.addEventListener("click", async (e) => {
+doneFilter?.addEventListener("click", async (e) => {
   const item = e.target as HTMLSelectElement;
   if (item.value === "all") {
     const todos = await request("todos", "get");
@@ -93,7 +95,7 @@ doneFilter.addEventListener("click", async (e) => {
   }
 });
 
-orderFilter.addEventListener("click", async (e) => {
+orderFilter?.addEventListener("click", async (e) => {
   const item = e.target as HTMLSelectElement;
 
   if (item.value === "none") {
@@ -114,34 +116,68 @@ orderFilter.addEventListener("click", async (e) => {
   }
 });
 
-// const editBtns = document.querySelectorAll(".edit-btn");
+// function deleteHandler() {
+//   const deleteBtns = document.querySelectorAll(".delete-btn");
+//   deleteBtns.forEach((deleteBtn) => {
+//     deleteBtn.addEventListener("click", (e) => {
+//       const item = e.target as HTMLElement;
+//       const todo = item.parentElement?.parentElement;
+//       const id = todo?.dataset.id;
+//       todo?.classList.add("delete");
 
-// editBtns.forEach((editBtn) => {
-//   editBtn.addEventListener("click", editTodo);
-// });
-
-// async function editTodo(e) {
-//   const todoItem = e.target.parentNode.parentNode as HTMLLIElement;
-//   const id = todoItem.dataset.id;
-//   const todoInput = document.querySelector(".todo-input") as HTMLInputElement;
-//   const addBtn = document.querySelector(".add-btn");
-//   let isDone = true;
-
-//   console.log("clicked");
-
-//   todoInput.focus();
-//   todoInput.value = todoItem.textContent;
-//   addBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
-
-//   todoItem.classList.toggle("completed");
-
-//   if (addBtn.firstElementChild.classList.contains("fa-pen-to-square")) {
-//     addBtn.addEventListener("click", async () => {
-//       await request(`todos/${id}`, "put", {
-//         title: todoInput.value,
-//         done: true,
-//       });
-//       addBtn.innerHTML = '<i class="fa-solid fa-plus"></i>';
+//       todo?.addEventListener(
+//         "transitionend",
+//         async () => {
+//           todo.remove();
+//           await request(`todos/${id}`, "delete");
+//         },
+//         { once: true }
+//       );
+//       toastifyOpen("할 일이 삭제됐어요 👻", "#ff5252", "#fff");
 //     });
-//   }
+//   });
+// }
+
+// function editHandler() {
+//   const editBtns = document.querySelectorAll(".edit-btn");
+//   editBtns.forEach((editBtn) => {
+//     editBtn.addEventListener("click", (e) => {
+//       let done = true;
+//       const item = e.target as HTMLElement;
+
+//       const todo = item.parentElement?.parentElement as HTMLLIElement;
+//       const todoTitle = todo.childNodes[0].childNodes[1];
+//       const todoInput = document.querySelector(
+//         ".todo-input"
+//       ) as HTMLInputElement;
+//       const addBtn = document.querySelector(".add-btn") as HTMLButtonElement;
+//       const id = todo.dataset.id;
+
+//       todoInput.focus();
+//       todoInput.value = todoTitle.textContent;
+//       addBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
+
+//       if (addBtn.firstElementChild?.classList.contains("fa-pen-to-square")) {
+//         addBtn.addEventListener("click", async () => {
+//           if (!todo.classList.contains("completed")) {
+//             done = false;
+//           }
+//           if (todoInput.value.length === 0) {
+//             toastifyOpen("할 일을 적어주세요 😵", "#ff5252", "#fff");
+//             return;
+//           }
+//           await request(`todos/${id}`, "put", {
+//             title: todoInput.value,
+//             done,
+//           });
+//           addBtn.innerHTML = '<i class="fa-solid fa-plus"></i>';
+//           todoInput.value = "";
+//           toastifyOpen("할 일이 수정됐어요 😀", "#b2dfdb", "#212529");
+
+//           const todos = await request("todos", "get");
+//           todos.length > 0 && getTodos(todos);
+//         });
+//       }
+//     });
+//   });
 // }
