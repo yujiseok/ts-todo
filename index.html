@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script type="module" defer src="src/main.ts"></script>
+    <title>Todo App</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- header -->
+      <header>Todo App ✅</header>
+      <!-- main -->
+      <main>
+        <div class="container" id="container">
+          <!-- input form -->
+          <div class="form-wrapper">
+            <form>
+              <input class="todo-input" type="text" />
+              <button type="submit" class="add-btn">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </form>
+
+            <!-- select wrapper -->
+            <div class="select-wrapper">
+              <button class="deleteAll-btn">모두 삭제</button>
+              <div>
+                <select class="done-filter">
+                  <option value="all">모두</option>
+                  <option value="true">완료</option>
+                  <option value="false">미완</option>
+                </select>
+                <select class="order-filter">
+                  <option value="none">사용자지정 순</option>
+                  <option value="newest">최신 순</option>
+                  <option value="oldest">오래된 순</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- input list -->
+          <div class="todo-wrapper">
+            <ul class="todo-list"></ul>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div class="toastify-container"></div>
+  </body>
+</html>
