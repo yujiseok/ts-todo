@@ -20,8 +20,8 @@ function deleteAll() {
     }
   });
   todoItems.length > 0
-    ? toastifyOpen("할 일이 모두 삭제됐어요 💥", "#ff5252", "#fff")
-    : toastifyOpen("삭제할 할 일이 없습니다 ❗", "#ff5252", "#fff");
+    ? toastifyOpen("할 일이 모두 삭제됐어요 💥", "error")
+    : toastifyOpen("삭제할 할 일이 없습니다 ❗", "error");
 }
 
 // const todos = await request("todos", "get");

@@ -1,5 +1,5 @@
 import { request } from "../api/request";
-import { container } from "../store/store";
+import { container, modalContainer } from "../store/store";
 import { ResponseValue } from "../typing";
 
 const todos = await request("todos", "get");
@@ -10,7 +10,7 @@ export const getTodos = (todos: ResponseValue) => {
   const todoList = container.querySelector(".todo-list") as HTMLUListElement;
   todoList.innerHTML = "";
   todos.length > 0 &&
-    todos.map((todo) => {
+    todos.map(async (todo) => {
       const { id, order, title, done, createdAt } = todo;
 
       // todoItem
@@ -54,7 +54,7 @@ export const getTodos = (todos: ResponseValue) => {
 
       btnWrapper.classList.add("btn-wrapper");
       deleteBtn.classList.add("delete-btn");
-      editBtn.classList.add("edit-btn");
+      editBtn.classList.add(`edit-btn`);
 
       btnWrapper.append(deleteBtn);
       btnWrapper.appendChild(editBtn);
@@ -64,18 +64,30 @@ export const getTodos = (todos: ResponseValue) => {
 
       todoList.appendChild(todoItem);
     });
+  const editBtns = container.querySelectorAll(".edit-btn");
+  editBtns.forEach((editBtn) =>
+    editBtn.addEventListener("click", (e) => {
+      const item = e.target as HTMLElement;
+      const id = item.parentElement?.parentElement?.dataset.id!;
+      const done =
+        item.parentElement?.parentElement?.firstElementChild?.querySelector(
+          "input"
+        )?.checked!;
+      const todoTitle =
+        item.parentElement?.parentElement?.firstChild?.lastChild?.textContent!;
+      const modalInput = modalContainer.querySelector(
+        ".modal-input"
+      ) as HTMLInputElement;
 
-  // const deleteAllbtn = document.querySelector(
-  //   ".deleteAll-btn"
-  // ) as HTMLButtonElement;
+      modalInput.setAttribute("data-id", id);
+      modalInput.setAttribute("data-done", `${!!done}`);
 
-  // todos.length > 0 && (deleteAllbtn.style.display = "block");
-
-  // editHandler();
-  // deleteHandler();
+      modalContainer.classList.add("open");
+      modalInput.focus();
+      modalInput.value = todoTitle;
+    })
+  );
 };
-
-todos.length > 0 ? getTodos(todos) : console.log("할일이 없는데?");
 
 doneFilter?.addEventListener("click", async (e) => {
   const item = e.target as HTMLSelectElement;
@@ -116,68 +128,4 @@ orderFilter?.addEventListener("click", async (e) => {
   }
 });
 
-// function deleteHandler() {
-//   const deleteBtns = document.querySelectorAll(".delete-btn");
-//   deleteBtns.forEach((deleteBtn) => {
-//     deleteBtn.addEventListener("click", (e) => {
-//       const item = e.target as HTMLElement;
-//       const todo = item.parentElement?.parentElement;
-//       const id = todo?.dataset.id;
-//       todo?.classList.add("delete");
-
-//       todo?.addEventListener(
-//         "transitionend",
-//         async () => {
-//           todo.remove();
-//           await request(`todos/${id}`, "delete");
-//         },
-//         { once: true }
-//       );
-//       toastifyOpen("할 일이 삭제됐어요 👻", "#ff5252", "#fff");
-//     });
-//   });
-// }
-
-// function editHandler() {
-//   const editBtns = document.querySelectorAll(".edit-btn");
-//   editBtns.forEach((editBtn) => {
-//     editBtn.addEventListener("click", (e) => {
-//       let done = true;
-//       const item = e.target as HTMLElement;
-
-//       const todo = item.parentElement?.parentElement as HTMLLIElement;
-//       const todoTitle = todo.childNodes[0].childNodes[1];
-//       const todoInput = document.querySelector(
-//         ".todo-input"
-//       ) as HTMLInputElement;
-//       const addBtn = document.querySelector(".add-btn") as HTMLButtonElement;
-//       const id = todo.dataset.id;
-
-//       todoInput.focus();
-//       todoInput.value = todoTitle.textContent;
-//       addBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
-
-//       if (addBtn.firstElementChild?.classList.contains("fa-pen-to-square")) {
-//         addBtn.addEventListener("click", async () => {
-//           if (!todo.classList.contains("completed")) {
-//             done = false;
-//           }
-//           if (todoInput.value.length === 0) {
-//             toastifyOpen("할 일을 적어주세요 😵", "#ff5252", "#fff");
-//             return;
-//           }
-//           await request(`todos/${id}`, "put", {
-//             title: todoInput.value,
-//             done,
-//           });
-//           addBtn.innerHTML = '<i class="fa-solid fa-plus"></i>';
-//           todoInput.value = "";
-//           toastifyOpen("할 일이 수정됐어요 😀", "#b2dfdb", "#212529");
-
-//           const todos = await request("todos", "get");
-//           todos.length > 0 && getTodos(todos);
-//         });
-//       }
-//     });
-//   });
-// }
+todos.length > 0 && getTodos(todos);

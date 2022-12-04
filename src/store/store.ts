@@ -8,5 +8,7 @@ const API_CONFIG = {
 };
 
 const container = document.getElementById("container") as HTMLDivElement;
-
-export { API_CONFIG, container };
+const modalContainer = document.querySelector(
+  ".modal-container"
+) as HTMLDivElement;
+export { API_CONFIG, container, modalContainer };
