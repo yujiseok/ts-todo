@@ -14,7 +14,8 @@ closeBtn?.addEventListener("click", async () => {
 });
 
 const modalEditBtn = modalContainer.querySelector(".modal-edit-btn");
-modalEditBtn?.addEventListener("click", async () => {
+modalEditBtn?.addEventListener("click", async (e) => {
+  e.preventDefault();
   const modalInput = modalContainer.querySelector(
     ".modal-input"
   ) as HTMLInputElement;
