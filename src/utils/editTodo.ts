@@ -1,6 +1,5 @@
 import { request } from "../api/request";
 import { container } from "../store/store";
-import { getTodos } from "./getTodos";
 import { toastifyOpen } from "./toast";
 
 const todoList = container.querySelector(".todo-list");

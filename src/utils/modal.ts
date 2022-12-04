@@ -1,5 +1,5 @@
 import { request } from "../api/request";
-import { container, modalContainer } from "../store/store";
+import { modalContainer } from "../store/store";
 import { getTodos } from "./getTodos";
 import { toastifyOpen } from "./toast";
 
@@ -14,7 +14,7 @@ closeBtn?.addEventListener("click", async () => {
 });
 
 const modalEditBtn = modalContainer.querySelector(".modal-edit-btn");
-modalEditBtn?.addEventListener("click", async (e) => {
+modalEditBtn?.addEventListener("click", async () => {
   const modalInput = modalContainer.querySelector(
     ".modal-input"
   ) as HTMLInputElement;
