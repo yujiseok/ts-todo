@@ -7,7 +7,7 @@
     "moduleResolution": "Node",
     "strict": true, // true로 바꿔야함
     "resolveJsonModule": true,
-    "isolatedModules": false, // true로
+    "isolatedModules": true, // true로
     "esModuleInterop": true,
     "noEmit": true,
     "noUnusedLocals": true,
