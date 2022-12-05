@@ -11,8 +11,6 @@ export const toastifyOpen = (text: string, className: string) => {
     toastifyContainer.appendChild(toastify);
 
   setTimeout(() => {
-    // toastify.addEventListener("animationend", () => {
     toastify.remove();
-    // });
   }, 2000);
 };

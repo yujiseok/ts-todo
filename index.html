@@ -62,17 +62,21 @@
       </main>
     </div>
 
+    <!-- toast -->
     <div class="toastify-container"></div>
+    <!-- modal -->
     <div class="modal-container">
       <div class="modal">
         <div class="close-wrap">
           <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <form>
-          <div>
-            <div class="check-todo">
-              <input class="modal-input" />
-            </div>
+          <div class="check-todo">
+            <input class="modal-input" />
+          </div>
+          <div class="date-info">
+            <div>📆 생성일 : <span class="createdAt"></span></div>
+            <div>📆 수정일 : <span class="updatedAt"></span></div>
           </div>
           <div class="btn-wrap">
             <button type="submit" class="modal-edit-btn">edit</button>

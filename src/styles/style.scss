@@ -6,6 +6,7 @@ $white: #fff;
 $lg: #f8f9fa;
 $dg: #212529;
 $red: #ff5252;
+$gray: rgb(130, 130, 130);
 
 * {
   padding: 0;
@@ -42,13 +43,6 @@ select {
 input {
   font-size: 1rem;
 }
-
-// input:disabled {
-//   background-color: transparent;
-//   color: $dg;
-//   height: 100%;
-//   font-size: 1rem;
-// }
 
 button {
   outline: none;
@@ -134,6 +128,7 @@ main {
     select {
       border-radius: 4px;
       padding: 0.25rem;
+      cursor: pointer;
     }
   }
 
@@ -147,6 +142,9 @@ main {
     }
   }
 
+  .draggable-list {
+  }
+
   .todo-item {
     display: flex;
     align-items: center;
@@ -156,7 +154,16 @@ main {
     background-color: #fff;
     border-radius: 6px;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    transition: all 0.5s ease, transform 0.5s linear;
+    transition: opacity 0.5s ease, transform 0.5s linear;
+    // cursor: grab;
+
+    // &:active {
+    //   cursor: grabbing;
+    // }
+
+    &.over {
+      border: 3px dotted $gray;
+    }
 
     &.delete {
       transform: translateX(500px);
@@ -305,7 +312,7 @@ main {
 
     .modal {
       transform: translate(-50%, 50%);
-      top: 30%;
+      top: 20%;
     }
   }
   .modal {
@@ -324,7 +331,7 @@ main {
 
     .close-wrap {
       position: absolute;
-      top: 6px;
+      top: 8px;
       right: 12px;
 
       i {
@@ -332,8 +339,7 @@ main {
       }
     }
     .check-todo {
-      margin-top: 1rem;
-      margin-bottom: 1.5rem;
+      margin: 1rem 0;
       display: flex;
       align-items: center;
       gap: 1rem;
@@ -346,6 +352,23 @@ main {
         width: 100%;
       }
     }
+
+    .date-info {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+
+      span {
+        display: inline-block;
+        font-size: 0.75rem;
+        color: $gray;
+        &:first-child {
+          margin-bottom: 0.125rem;
+        }
+      }
+    }
+
     .btn-wrap {
       display: flex;
       justify-content: center;
@@ -374,14 +397,3 @@ main {
   text-decoration: line-through;
   opacity: 0.5;
 }
-
-// @keyframes fadeout {
-//   from {
-//     opacity: 1;
-//     transform: translateX(0);
-//   }
-//   to {
-//     opacity: 0;
-//     transform: translateX(500px);
-//   }
-// }

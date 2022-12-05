@@ -1,24 +1,49 @@
 import { request } from "../api/request";
-import { container, modalContainer } from "../store/store";
+import {
+  container,
+  doneFilter,
+  modalContainer,
+  orderFilter,
+} from "../store/store";
 import { ResponseValue } from "../typing";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
+dayjs.locale("ko");
 
 const todos = await request("todos", "get");
-const doneFilter = container?.querySelector(".done-filter");
-const orderFilter = container?.querySelector(".order-filter");
 
-export const getTodos = (todos: ResponseValue) => {
+export const getTodos = (todos: ResponseValue, done?, order?) => {
   const todoList = container.querySelector(".todo-list") as HTMLUListElement;
   todoList.innerHTML = "";
+  if (done === "true") {
+    todos = todos.filter((todo) => todo.done === true);
+  }
+  if (done === "false") {
+    todos = todos.filter((todo) => todo.done === false);
+  }
+  if (order === "oldest") {
+    todos = todos.sort(
+      (a, b) =>
+        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    );
+  }
+
   todos.length > 0 &&
-    todos.map(async (todo) => {
-      const { id, order, title, done, createdAt } = todo;
+    todos.map(async (todo, i) => {
+      const { id, order, title, done, createdAt, updatedAt } = todo;
+
+      // draggableBox
+      const draggableList = document.createElement("li");
+      draggableList.classList.add("draggable-list");
+      // draggableList.setAttribute("draggable", "true");
 
       // todoItem
-      const todoItem = document.createElement("li");
+      const todoItem = document.createElement("div");
       todoItem.classList.add("todo-item");
       todoItem.setAttribute("data-id", id);
-      todoItem.setAttribute("data-createdAt", createdAt);
-      todoItem.setAttribute("data-order", order.toString());
+      todoItem.setAttribute("data-createdat", createdAt);
+      todoItem.setAttribute("data-updatedat", updatedAt);
+      todoItem.setAttribute("data-order", (order + i).toString());
 
       // checkTodo
       const checkTodo = document.createElement("div");
@@ -61,71 +86,101 @@ export const getTodos = (todos: ResponseValue) => {
 
       todoItem.append(checkTodo);
       todoItem.appendChild(btnWrapper);
+      draggableList.append(todoItem);
 
-      todoList.appendChild(todoItem);
+      todoList.appendChild(draggableList);
     });
+
   const editBtns = container.querySelectorAll(".edit-btn");
   editBtns.forEach((editBtn) =>
-    editBtn.addEventListener("click", (e) => {
-      const item = e.target as HTMLElement;
-      const id = item.parentElement?.parentElement?.dataset.id!;
-      const done =
-        item.parentElement?.parentElement?.firstElementChild?.querySelector(
-          "input"
-        )?.checked!;
-      const todoTitle =
-        item.parentElement?.parentElement?.firstChild?.lastChild?.textContent!;
-      const modalInput = modalContainer.querySelector(
-        ".modal-input"
-      ) as HTMLInputElement;
-
-      modalInput.setAttribute("data-id", id);
-      modalInput.setAttribute("data-done", `${!!done}`);
-
-      modalContainer.classList.add("open");
-      modalInput.focus();
-      modalInput.value = todoTitle;
-    })
+    editBtn.addEventListener("click", modalHandler)
   );
 };
+function modalHandler(e) {
+  const item = e.target as HTMLElement;
+  const todo = item.parentElement?.parentElement as HTMLLIElement;
 
-doneFilter?.addEventListener("click", async (e) => {
-  const item = e.target as HTMLSelectElement;
-  if (item.value === "all") {
-    const todos = await request("todos", "get");
-    getTodos(todos);
-  }
-  if (item.value === "true") {
-    const todos = await request("todos", "get");
-    const doneTodos = todos.filter((todo) => todo.done === true);
-    getTodos(doneTodos);
-  }
-  if (item.value === "false") {
-    const todos = await request("todos", "get");
-    const notDoneTodos = todos.filter((todo) => todo.done === false);
-    getTodos(notDoneTodos);
-  }
-});
+  const id = todo.dataset.id!;
+  const done = todo.firstElementChild?.querySelector("input")?.checked!;
+  const todoTitle = todo?.textContent!;
+  const createdAt = dayjs(todo.dataset.createdat).format(
+    "YYYY-MM-DD ddd요일 HH:mm:ss"
+  );
+  const updatedAt = dayjs(todo.dataset.updatedat).format(
+    "YYYY-MM-DD ddd요일 HH:mm:ss"
+  );
+  const modalInput = modalContainer.querySelector(
+    ".modal-input"
+  ) as HTMLInputElement;
+  const createdInfo = modalContainer.querySelector(
+    ".createdAt"
+  ) as HTMLSpanElement;
+  const updatedInfo = modalContainer.querySelector(
+    ".updatedAt"
+  ) as HTMLSpanElement;
 
-orderFilter?.addEventListener("click", async (e) => {
-  const item = e.target as HTMLSelectElement;
+  modalInput.setAttribute("data-id", id);
+  modalInput.setAttribute("data-done", `${!!done}`);
+  createdInfo.textContent = createdAt!;
+  updatedInfo.textContent = updatedAt!;
+  modalContainer.classList.add("open");
+  modalInput.focus();
+  modalInput.value = todoTitle;
+}
+function doneFilterHandler() {
+  // if (doneFilter.value === "all") {
+  //   conditionalRender();
+  // }
+  // if (doneFilter.value === "true") {
+  //   conditionalRender();
+  // }
+  // if (doneFilter.value === "false") {
+  //   conditionalRender();
+  // }
 
-  if (item.value === "none") {
-    const todos = await request("todos", "get");
-    getTodos(todos);
+  switch (doneFilter.value) {
+    case "all":
+      conditionalRender();
+      break;
+    case "true":
+      conditionalRender();
+      break;
+    case "false":
+      conditionalRender();
+      break;
+    default:
+      break;
   }
-  if (item.value === "newest") {
-    const todos = await request("todos", "get");
-    getTodos(todos);
+}
+function orderFilterHandler() {
+  // if (orderFilter.value === "none") {
+  //   conditionalRender();
+  // }
+  // if (orderFilter.value === "newest") {
+  //   conditionalRender();
+  // }
+  // if (orderFilter.value === "oldest") {
+  //   conditionalRender();
+  // }
+  switch (orderFilter.value) {
+    case "none":
+      conditionalRender();
+      break;
+    case "newest":
+      conditionalRender();
+      break;
+    case "oldest":
+      conditionalRender();
+      break;
+    default:
+      break;
   }
-  if (item.value === "oldest") {
-    const todos = await request("todos", "get");
-    const ascendingTodos = [...todos].sort(
-      (a, b) =>
-        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-    );
-    getTodos(ascendingTodos);
-  }
-});
+}
+async function conditionalRender() {
+  const todos = await request("todos", "get");
+  getTodos(todos, doneFilter.value, orderFilter.value);
+}
 
-todos.length > 0 && getTodos(todos);
+todos.length > 0 && getTodos(todos, doneFilter.value, orderFilter.value);
+doneFilter.addEventListener("click", doneFilterHandler);
+orderFilter.addEventListener("click", orderFilterHandler);

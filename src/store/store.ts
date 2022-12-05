@@ -8,7 +8,13 @@ const API_CONFIG = {
 };
 
 const container = document.getElementById("container") as HTMLDivElement;
+const doneFilter = container?.querySelector(
+  ".done-filter"
+) as HTMLSelectElement;
+const orderFilter = container?.querySelector(
+  ".order-filter"
+) as HTMLSelectElement;
 const modalContainer = document.querySelector(
   ".modal-container"
 ) as HTMLDivElement;
-export { API_CONFIG, container, modalContainer };
+export { API_CONFIG, container, doneFilter, orderFilter, modalContainer };
